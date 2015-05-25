@@ -49,6 +49,7 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
     );
 
     additionalProperties.put("invokerPackage", invokerPackage);
+    additionalProperties.put("composerName", "timepad/timepad-sdk-php");
     additionalProperties.put("groupId", groupId);
     additionalProperties.put("artifactId", artifactId);
     additionalProperties.put("artifactVersion", artifactVersion);

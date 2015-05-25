@@ -72,21 +72,21 @@ class {{classname}} {
         $formParams['{{baseName}}'] = {{#isFile}}'@' . {{/isFile}}$this->apiClient->toFormValue(${{paramName}});
       }{{/formParams}}
       {{#bodyParams}}// body params
-      $body = null;
+      $preparedBody = null;
       if (isset(${{paramName}})) {
-        $body = ${{paramName}};
+        $preparedBody = ${{paramName}};
       }{{/bodyParams}}
 
       // for HTTP post (form)
-      $body = $body ?: $formParams;
+      $preparedBody = $preparedBody ?: $formParams;
 
       if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") > -1) {
-        $body = http_build_query($body);
+        $preparedBody = http_build_query($preparedBody);
       }
 
       // make the API Call
       $response = $this->apiClient->callAPI($resourcePath, $method,
-                                            $queryParams, $body,
+                                            $queryParams, $preparedBody,
                                             $headerParams);
 
       {{#returnType}}if(! $response) {
