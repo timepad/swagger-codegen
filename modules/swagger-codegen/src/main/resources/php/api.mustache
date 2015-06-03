@@ -75,10 +75,13 @@ class {{classname}} {
       $preparedBody = null;
       if (isset(${{paramName}})) {
         $preparedBody = ${{paramName}};
-      }{{/bodyParams}}
-
+      }
       // for HTTP post (form)
       $preparedBody = $preparedBody ?: $formParams;
+      {{/bodyParams}}
+      {{^bodyParams}}
+      $preparedBody = $formParams;
+      {{/bodyParams}}
 
       if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") > -1) {
         $preparedBody = http_build_query($preparedBody);

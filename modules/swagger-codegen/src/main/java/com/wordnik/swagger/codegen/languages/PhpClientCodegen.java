@@ -49,7 +49,6 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
     );
 
     additionalProperties.put("invokerPackage", invokerPackage);
-    additionalProperties.put("composerName", "timepad/timepad-sdk-php");
     additionalProperties.put("groupId", groupId);
     additionalProperties.put("artifactId", artifactId);
     additionalProperties.put("artifactVersion", artifactVersion);
@@ -59,13 +58,18 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
     languageSpecificPrimitives.add("map");
     languageSpecificPrimitives.add("string");
     languageSpecificPrimitives.add("DateTime");
+    languageSpecificPrimitives.add("bool");
+    languageSpecificPrimitives.add("float");
 
     typeMapping.put("long", "int");
     typeMapping.put("integer", "int");
+    typeMapping.put("number", "float");
     typeMapping.put("Array", "array");
     typeMapping.put("String", "string");
     typeMapping.put("List", "array");
     typeMapping.put("map", "map");
+    typeMapping.put("boolean", "bool");
+    typeMapping.put("date", "DateTime");
 
     supportingFiles.add(new SupportingFile("composer.mustache", packagePath, "composer.json"));
     supportingFiles.add(new SupportingFile("APIClient.mustache", packagePath + "/lib", "APIClient.php"));
