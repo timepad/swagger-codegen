@@ -26,6 +26,6 @@ fi
 
 # if you've executed sbt assembly previously it will use that instead.
 export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -DloggerPath=conf/log4j.properties"
-ags="$@ generate -t modules/swagger-codegen/src/main/resources/php -i http://large-friction.surge.sh/swagger.json -l php -o samples/client/timepad/php"
+ags="$@ generate -t modules/swagger-codegen/src/main/resources/php -i https://api.timepad.ru/doc/swagger.json -l php -o samples/client/timepad/php"
 
 java $JAVA_OPTS -jar $executable $ags
