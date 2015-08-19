@@ -31,17 +31,17 @@ class {{classname}} {
 
     {{#operation}}
     /**
-    * {{{nickname}}}
-    *
-    * {{{summary}}}
-    *
-    * @param array[string] $params Ассоциативный массив параметров. Может содержать следующие поля:
-    *
-{{#allParams}}    * '{{paramName}}' ({{dataType}}) {{description}} {{#required}}(required){{/required}}{{^required}}(optional){{/required}}
+     * {{{nickname}}}
+     *
+     * {{{summary}}}
+     *
+     * @param array[string] $params Ассоциативный массив параметров. Может содержать следующие поля:
+     *
+{{#allParams}}     * '{{paramName}}' ({{dataType}}) {{description}} {{#required}}(required){{/required}}{{^required}}(optional){{/required}}
 {{/allParams}}
-    *
-    * @return {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
-    */
+     *
+     * @return {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
+     */
     public function {{nickname}}($params = []) {
         $resourcePath = "{{path}}";
         $resourcePath = str_replace("{format}", "json", $resourcePath);
@@ -56,52 +56,50 @@ class {{classname}} {
         $_header_content_type = array({{#consumes}}'{{mediaType}}'{{#hasMore}},{{/hasMore}}{{/consumes}});
         $headerParams['Content-Type'] = count($_header_content_type) > 0 ? $_header_content_type[0] : 'application/json';
 
-        // query params
-        {{#queryParams}}
+        // query params{{#queryParams}}
         if (isset($params['{{paramName}}'])) {
             $queryParams['{{baseName}}'] = $this->apiClient->toQueryValue($params['{{paramName}}']);
         }{{/queryParams}}
-        // header params
-        {{#headerParams}}
+
+        // header params{{#headerParams}}
         if (isset($params['{{paramName}}'])) {
             $headerParams['{{baseName}}'] = $this->apiClient->toHeaderValue($params['{{paramName}}']);
         }{{/headerParams}}
-        // path params
-        {{#pathParams}}
+
+        // path params{{#pathParams}}
         if (isset($params['{{paramName}}'])) {
             $resourcePath = str_replace("{" . "{{baseName}}" . "}", $this->apiClient->toPathValue($params['{{paramName}}']), $resourcePath);
         }{{/pathParams}}
-        // form params
-        {{#formParams}}
+
+        // form params{{#formParams}}
         if (isset($params['{{paramName}}'])) {
-        $formParams['{{baseName}}'] = {{#isFile}}'@' . {{/isFile}}$this->apiClient->toFormValue($params['{{paramName}}']);
+            $formParams['{{baseName}}'] = {{#isFile}}'@' . {{/isFile}}$this->apiClient->toFormValue($params['{{paramName}}']);
         }{{/formParams}}
-        // body params
-        {{#bodyParams}}
+
+        // body params{{#bodyParams}}
         $preparedBody = null;
         if (isset($params['{{paramName}}'])) {
             $preparedBody = $params['{{paramName}}'];
         }
+
         // for HTTP post (form)
         $preparedBody = $preparedBody ?: $formParams;
-        {{/bodyParams}}
-        {{^bodyParams}}
+        {{/bodyParams}}{{^bodyParams}}
         $preparedBody = $formParams;
         {{/bodyParams}}
 
         if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") > -1) {
-        $preparedBody = http_build_query($preparedBody);
+            $preparedBody = http_build_query($preparedBody);
         }
 
         // make the API Call
         $response = $this->apiClient->callAPI($resourcePath, $method, $queryParams, $preparedBody, $headerParams);
-
-        {{#returnType}}if (!$response) {
+        {{#returnType}}
+        if (!$response) {
             return null;
         }
 
-        $responseObject = $this->apiClient->deserialize($response,
-                                                        '{{returnType}}');
+        $responseObject = $this->apiClient->deserialize($response, '{{returnType}}');
         return $responseObject;{{/returnType}}
     }
    {{/operation}}
