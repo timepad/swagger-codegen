@@ -56,23 +56,28 @@ class {{classname}} {
         $_header_content_type = array({{#consumes}}'{{mediaType}}'{{#hasMore}},{{/hasMore}}{{/consumes}});
         $headerParams['Content-Type'] = count($_header_content_type) > 0 ? $_header_content_type[0] : 'application/json';
 
-        {{#queryParams}}// query params
+        // query params
+        {{#queryParams}}
         if (isset($params['{{paramName}}'])) {
             $queryParams['{{baseName}}'] = $this->apiClient->toQueryValue($params['{{paramName}}']);
         }{{/queryParams}}
-        {{#headerParams}}// header params
+        // header params
+        {{#headerParams}}
         if (isset($params['{{paramName}}'])) {
             $headerParams['{{baseName}}'] = $this->apiClient->toHeaderValue($params['{{paramName}}']);
         }{{/headerParams}}
-        {{#pathParams}}// path params
+        // path params
+        {{#pathParams}}
         if (isset($params['{{paramName}}'])) {
             $resourcePath = str_replace("{" . "{{baseName}}" . "}", $this->apiClient->toPathValue($params['{{paramName}}']), $resourcePath);
         }{{/pathParams}}
-        {{#formParams}}// form params
+        // form params
+        {{#formParams}}
         if (isset($params['{{paramName}}'])) {
         $formParams['{{baseName}}'] = {{#isFile}}'@' . {{/isFile}}$this->apiClient->toFormValue($params['{{paramName}}']);
         }{{/formParams}}
-        {{#bodyParams}}// body params
+        // body params
+        {{#bodyParams}}
         $preparedBody = null;
         if (isset($params['{{paramName}}'])) {
             $preparedBody = $params['{{paramName}}'];
