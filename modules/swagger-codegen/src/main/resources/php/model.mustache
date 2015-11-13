@@ -42,8 +42,10 @@ class {{classname}} implements ArrayAccess {
     {{#vars}}{{#description}}
     /**
     * {{{description}}}
+    *
+    * @var {{{datatype}}}
     */{{/description}}
-    public ${{name}}; /* {{{datatype}}} */{{/vars}}
+    public ${{name}};{{/vars}}
 
     public function __construct(array $data = null) {
     {{#vars}}

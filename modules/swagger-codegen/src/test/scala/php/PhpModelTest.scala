@@ -96,7 +96,7 @@ class PhpModelTest extends FlatSpec with Matchers {
     vars.get(0).isNotContainer should equal (true)
 
     vars.get(1).baseName should be ("urls")
-    vars.get(1).datatype should be ("array[string]")
+    vars.get(1).datatype should be ("string[]")
     vars.get(1).name should be ("urls")
     vars.get(1).baseType should be ("array")
     vars.get(1).hasMore should be (null)
@@ -171,7 +171,7 @@ class PhpModelTest extends FlatSpec with Matchers {
     val vars = cm.vars
     vars.get(0).baseName should be ("children")
     vars.get(0).complexType should be ("Children")
-    vars.get(0).datatype should be ("array[Children]")
+    vars.get(0).datatype should be ("Children[]")
     vars.get(0).name should be ("children")
     vars.get(0).baseType should be ("array")
     vars.get(0).containerType should be ("array")

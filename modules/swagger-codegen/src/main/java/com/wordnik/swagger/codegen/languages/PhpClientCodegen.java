@@ -96,7 +96,7 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
     if(p instanceof ArrayProperty) {
       ArrayProperty ap = (ArrayProperty) p;
       Property inner = ap.getItems();
-      return getSwaggerType(p) + "[" + getTypeDeclaration(inner) + "]";
+      return getTypeDeclaration(inner) + "[]";
     }
     else if (p instanceof MapProperty) {
       MapProperty mp = (MapProperty) p;
